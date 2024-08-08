@@ -23,7 +23,7 @@ function [resp_time, keysPressed, stage_idx] = stage_choice(...
 
     %% Check whether enter key is pushed
     % with photodiode off prepared
-    [keysPressed,visual_opt] = check_keys(device_opt, t_phd_off,visual_opt);
+    [keysPressed,visual_opt, abort] = check_keys(device_opt, t_phd_off,visual_opt);
 
     %% Record response profiles once they press the Return key
     response_str = cell2mat(keysPressed.names);
@@ -35,7 +35,9 @@ function [resp_time, keysPressed, stage_idx] = stage_choice(...
     %     disp('--------------------------------');
     
     %% Stage change
-    stage_idx = 3; % feedback
+    if abort;   stage_idx = 21;
+    else;       stage_idx = 3; % feedback
+    end
 end
 
 function visual_opt=save_timing(visual_opt,name)
@@ -50,3 +52,7 @@ if visual_opt.verbose
 end
 
 end
+
+%% changelog
+% Kokalas @ 2024/8/8
+%   - Made the same fixes as in the arithmetic task.
