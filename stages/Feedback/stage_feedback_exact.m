@@ -1,52 +1,45 @@
-function [id_correct, stage_idx] = stage_feedback_with_exact_numbers(...
-                            visual_opt, game_opt, device_opt, curr_opt,keyProfile)
+function [curr_opt, game_opt, stage_idx] = stage_feedback_exact(...
+                            visual_opt, game_opt, ~, curr_opt,keyProfile) % AC 03/2025 - new function withouy adaptive error threshold
                         
     visual_opt.feedback_t1 = GetSecs();
+    form = curr_opt.curr_format;
     
     %% decide correct vs incorrect
     %   get correct answer
     target_num_str=num2str(curr_opt.target_num);
+    target_num = str2num(target_num_str);
     fprintf('target number is: %3.1d \n', curr_opt.target_num);
     
-    % use string match to decide correctness
-    % note: this can be useful when subjects accidentally press a wrong key
-    % (correct as long as subject put a correct digits in a sequence e.g., '312' or '123' for target 12)
+    % process response
     response_str = cell2mat(keyProfile.names);
     disp(['response number is : ' response_str]);
-    if ~isempty(response_str)
-        id_correct = regexp(response_str,target_num_str,'ONCE');
+    response_num = str2num(response_str);
+    
+    % decide correct vs incorrect
+    error = abs(target_num-response_num);
+    if error == 0
+        id_correct = true;
     else
         id_correct = false;
     end
-    
-    if isempty(id_correct)
-        id_correct = false; 
-    else
-        id_correct = true; 
-    end
-    
+           
     % set up color
     if id_correct
         textcolor = [0,255,0]; 
     else
         textcolor = [255,0,0];
     end
+    
+    % save in game_opt for staircase
+    curr_opt.id_correct = id_correct;
+    game_opt.(['n_correct_' form]) = game_opt.(['n_correct_' form]) + id_correct;
+    game_opt.(['n_' form]) = game_opt.(['n_' form]) + id_correct;
                      
-    %% present "=" at the screen center (correct: green, incorrect: red)
-    % =
-    curr_str='=';
-    curr_pos = [visual_opt.xCenter, visual_opt.yCenter];
+    %% turn response into green if correct, red if incorrect
     photoD_on = true;
-    present_without_flip(visual_opt,curr_str,curr_pos,photoD_on, textcolor);
-    % response
-    response_pos = [visual_opt.xCenter+game_opt.feedback_offset, visual_opt.yCenter]; %  show subjects' response on the right
+    response_pos = [visual_opt.xCenter, visual_opt.yCenter]; %  show subjects' response 
     present_without_flip(visual_opt,response_str,response_pos,photoD_on, textcolor); 
-    % target number
-    target_pos = [visual_opt.xCenter-game_opt.feedback_offset, visual_opt.yCenter]; % with target number on the left
-    present_without_flip(visual_opt,target_num_str,target_pos,photoD_on, textcolor);
     t_present=Screen('Flip', visual_opt.window);
-   
-    Screen('Flip', visual_opt.window,0); % 0 for when
     visual_opt=save_timing(visual_opt,'feedback'); % to check photodiode timing
     
     % photodiode off
@@ -54,11 +47,7 @@ function [id_correct, stage_idx] = stage_feedback_with_exact_numbers(...
     stage_idx = 3; % current stage
     phd_duration =visual_opt.photoD_duration{stage_idx+1};
     t_phd_off = t_present + phd_duration;
-    
-    present_without_flip(visual_opt,curr_str,curr_pos,photoD_on, textcolor); % =
     present_without_flip(visual_opt,response_str,response_pos,photoD_on, textcolor); % response
-    present_without_flip(visual_opt,target_num_str,target_pos,photoD_on, textcolor); % target
-    
     Screen('Flip', visual_opt.window, t_phd_off);
     visual_opt=save_timing(visual_opt,'feedback_phd_off'); % to check photodiode timing
     

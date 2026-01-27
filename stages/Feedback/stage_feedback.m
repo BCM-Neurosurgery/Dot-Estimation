@@ -18,7 +18,7 @@ function [curr_opt, game_opt, stage_idx] = stage_feedback(...
     % decide correct vs incorrect
     error = abs(target_num-response_num);
     if error <= game_opt.(['correct_range_' form])
-        id_correct =true;
+        id_correct = true;
     else
         id_correct = false;
     end
@@ -27,11 +27,13 @@ function [curr_opt, game_opt, stage_idx] = stage_feedback(...
     if id_correct
         game_opt.(['correct_range_' form]) = ...
             game_opt.(['correct_range_' form]) - game_opt.(['down_correct_' form]);
+        game_opt.(['correct_range_' form]) = max(game_opt.(['correct_range_' form]), 0.5);
     else
         game_opt.(['correct_range_' form]) = ...
             game_opt.(['correct_range_' form]) + game_opt.(['up_error_' form]);
     end
-        
+    fprintf('Current threshold (%s): %f\n', ['correct_range_' form], game_opt.(['correct_range_' form]));
+   
     % set up color
     if id_correct
         textcolor = [0,255,0]; 

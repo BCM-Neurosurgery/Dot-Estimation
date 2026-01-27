@@ -28,7 +28,7 @@ function main(varargin)
         case 'emu'     % If we set the EMU as the exprimental environment, get the EMU number
             try
                 [EMUnum,ID] = getNextLogEntry(); % not exist
-                saveFileName = sprintf('EMU-%0.4d_subj-%s_Arithmetic-Task', EMUnum, ID);
+                saveFileName = sprintf('EMU-%0.4d_subj-%s_Dot-Estimation', EMUnum, ID);
                 onlineNSP = TaskComment('start', saveFileName);
             catch ME
                 disp(ME)
@@ -213,7 +213,8 @@ function main(varargin)
                 end
 		
                 [curr_opt, game_opt, stage_idx] = stage_feedback(...
-                    visual_opt, game_opt, device_opt, curr_opt,keyProfile);
+                            visual_opt, game_opt, device_opt, curr_opt,keyProfile);
+
                 
                 % Generate an end log 
                 logMsg = sprintf('Trial %d Feedback End', path_opt.curr_trial);

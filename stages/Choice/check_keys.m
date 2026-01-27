@@ -47,12 +47,17 @@ while ~exit_key
         % Store only the newly pressed key.
         keyCode_newPress = keyCode-previous_keyCode == 1;
         if any(keyCode_newPress)
-            keysPressed.times = [keysPressed.times, secs];
-            
             keyName = KbName(keyCode_newPress);
-            keyName=remove_string(keyName); % remove extra string for number key presses
-            keysPressed.names = [keysPressed.names, {keyName}];
-            
+            keyName = remove_string(keyName); % remove extra string for number key presses
+            if strcmpi(keyName, 'backspace') % AC 03/21/2025
+                if ~isempty(keysPressed.names)
+                    keysPressed.names(end) = [];
+                    keysPressed.times(end) = [];
+                end
+            else
+                keysPressed.times = [keysPressed.times, secs];
+                keysPressed.names = [keysPressed.names, {keyName}];
+            end
             % photodiode for each touch for now
             %                 if id_first_touch
             visual_opt=present_photodiode(visual_opt,keysPressed.names);
