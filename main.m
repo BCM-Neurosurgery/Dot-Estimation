@@ -40,7 +40,17 @@ function main(varargin)
     %% Initialize
     % autoclear(); % not exist
     verbose = false; % true; % false; % Mostly for debugging
-    [visual_opt,device_opt, game_opt, path_opt] = stage_initialize(ID);
+    save_path = "C:\Users\EMU - Behavior\Documents\MATLAB\PatientData";
+    switch ExpEnv
+        case 'emu' 
+            try
+                [visual_opt,device_opt, game_opt, path_opt] = stage_initialize(ID, save_path, EMUnum);
+            catch ME
+                disp(ME)
+                [visual_opt,device_opt, game_opt, path_opt] = stage_initialize(ID, save_path, -1);
+            end
+    end
+
     
     %% Task starts
     if verbose
