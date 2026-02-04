@@ -49,6 +49,8 @@ function main(varargin)
                 disp(ME)
                 [visual_opt,device_opt, game_opt, path_opt] = stage_initialize(ID, save_path, -1);
             end
+        otherwise
+            [visual_opt,device_opt, game_opt, path_opt] = stage_initialize(ID, save_path, -1);
     end
 
     

@@ -25,7 +25,7 @@ function stage_idx = stage_present(visual_opt, game_opt, curr_opt)
     visual_opt=save_timing(visual_opt,present_on_t1,['phd_off']); % to check photodiode timing
     
     % Align time
-    align_time(present_on_t, game_opt.st1im_present, ...
+    align_time(present_on_t, game_opt.stim_present, ...
         game_opt.t_resolution);
     visual_opt=save_timing(visual_opt,present_on_t1,['off']); % to check photodiode timing
    
