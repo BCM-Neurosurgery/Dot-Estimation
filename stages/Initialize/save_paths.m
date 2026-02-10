@@ -6,7 +6,7 @@ function path_opt = save_paths(ID, save_path, EMUnum)
     path_opt.exc_path = save_path; % ['../../', curr_dir]; % Execution path.
     exp_dates = datetime('now', 'Format', 'dd-MM-yyyy_hh-mm-ss');
     task_id = sprintf("EMU_%04d_%s", EMUnum, string(exp_dates));
-	path_opt.save_data = fullfile(path_opt.exc_path, ID, 'arithmetic-task', task_id);
+	path_opt.save_data = fullfile(path_opt.exc_path, ID, 'dot-estimation', task_id);
 	if ~exist(path_opt.save_data, 'dir') 
         % If the saving path does not exist.
 		mkdir(path_opt.save_data);
