@@ -76,9 +76,9 @@ path_opt.curr_trial= 1;   % you could overwrite and start from trial N by typing
             case -1 
                 %% Saving stage (Part 1 of ITI)
                 % Generate a Log
-                times.save_start_t = GetSecs();
+                times.save_start_t = GetSecs() - times.exp_start_t;
                 logMsg = sprintf('Trial %d Save Start', path_opt.curr_trial);
-                eventLog = [eventLog; {logMsg, GetSecs()}];
+                eventLog = [eventLog; {logMsg, GetSecs() - times.exp_start_t}];
                 switch ExpEnv
                     case 'emu'     % If we set the EMU as the exprimental environment, get the EMU number
                         try         for i=1:numel(onlineNSP); cbmex('comment', 16777060, 0, logMsg,'instance',onlineNSP(i)-1); end
@@ -92,7 +92,7 @@ path_opt.curr_trial= 1;   % you could overwrite and start from trial N by typing
 		
                 % Generate an end log
                 logMsg = sprintf('Trial %d Save End', path_opt.curr_trial);
-                eventLog = [eventLog; {logMsg, GetSecs()}];
+                eventLog = [eventLog; {logMsg, GetSecs() - times.exp_start_t}];
                 switch ExpEnv
                     case 'emu'     % If we set the EMU as the exprimental environment, get the EMU number
                         try         for i=1:numel(onlineNSP); cbmex('comment', 16777060, 0, logMsg,'instance',onlineNSP(i)-1); end

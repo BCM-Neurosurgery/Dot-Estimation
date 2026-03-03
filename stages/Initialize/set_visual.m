@@ -16,7 +16,7 @@ function visual_opt = set_visual()
     Screen('Preference', 'VisualDebugLevel', 0);
     Screen('Preference', 'SkipSyncTests', 1);
     Screen('Preference', 'Verbosity', 0); % Hides Psychtoolbox Warnings
-	screen = 1;%max( Screen('Screens') );  % select what screen to use 
+	screen = max( Screen('Screens') );  % select what screen to use 
 
     [window, windowRect] ...
         = Screen('OpenWindow', screen, 0); % default is black
@@ -58,7 +58,7 @@ function visual_opt = set_visual()
     %     1.ITI(6/30 sec); 
     
     % spatial for photodiode
-    grid_nCols = 12;
+    grid_nCols = 0;
     grid_nRows = 6;
     
     x_grid_sel = 1;
