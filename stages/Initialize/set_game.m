@@ -6,7 +6,7 @@ function game_opt = set_game(visual_opt)
     ITI_duration = 0.5;  % time of ITI
     
     % setting stimulus duration
-    stim_durations = 1.25; % [1/3; 1];
+    stim_durations = 1.5; % [1/3; 1];
     i_durations = randi(length(stim_durations),1);
     stim_present = stim_durations(i_durations); % time for stim present for each opt
     
@@ -18,7 +18,7 @@ function game_opt = set_game(visual_opt)
     
     t_resolution = 1/1000;
 
-    sess_trs = 300; % assuming 10min / (4sec/trial) = 150 trials
+    sess_trs = 180; % assuming 10min / (4sec/trial) = 150 trials
     
     %% 2. Task specific
     

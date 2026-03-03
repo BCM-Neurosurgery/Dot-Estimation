@@ -53,7 +53,10 @@ function main(varargin)
             [visual_opt,device_opt, game_opt, path_opt] = stage_initialize(ID, save_path, -1);
     end
 
-    
+
+hanlin_fixRandomTrialsDot; % this generate the 4 variables to be assigned below;
+game_opt.oper1     = oper1;
+path_opt.curr_trial= 24;   % you could overwrite and start from trial N by typing N-1 here . 
     %% Task starts
     if verbose
         session_onset=true;
@@ -120,7 +123,7 @@ function main(varargin)
 
                 disp('--------------------------------');
                 fprintf( 'Trial: %4.0d \n', path_opt.curr_trial);
-    
+                 game_opt.trial =  path_opt.curr_trial;
                 % Preparing next trials
                 [curr_opt, stage_idx] = stage_ITI(game_opt);
                 
