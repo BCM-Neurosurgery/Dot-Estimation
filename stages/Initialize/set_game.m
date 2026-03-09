@@ -6,7 +6,7 @@ function game_opt = set_game(visual_opt)
     ITI_duration = 0.5;  % time of ITI
     
     % setting stimulus duration
-    stim_durations = 1.5; % [1/3; 1];
+    stim_durations = 3; % [1/3; 1]; % original is 1.5
     i_durations = randi(length(stim_durations),1);
     stim_present = stim_durations(i_durations); % time for stim present for each opt
     

@@ -56,7 +56,7 @@ function main(varargin)
 
 hanlin_fixRandomTrialsDot; % this generate the 4 variables to be assigned below;
 game_opt.oper1     = oper1;
-path_opt.curr_trial= 1;   % you could overwrite and start from trial N by typing N-1 here . 
+path_opt.curr_trial= 0;   % you could overwrite and start from trial N by typing N-1 here . 
     %% Task starts
     if verbose
         session_onset=true;
@@ -68,6 +68,7 @@ path_opt.curr_trial= 1;   % you could overwrite and start from trial N by typing
     
     %% Main while loop running controlling the experiment
     stage_idx = 0;
+    Beeper(1200, 3000, .15);
     times.exp_start_t = GetSecs();
     save_duration=0;
     while(session_onset)
@@ -105,7 +106,7 @@ path_opt.curr_trial= 1;   % you could overwrite and start from trial N by typing
                 %% Preparing next trials (Part 2 of ITI)
                 % Generate a start log
                 % also play tone
-                Beeper(600, 'durationSec', .15);
+                Beeper(600, 3000, .15);
                 times.ITI_start_t = GetSecs();
                 logMsg = sprintf('Trial %d ITI Start', path_opt.curr_trial + 1);
                 eventLog = [eventLog; {logMsg, GetSecs()}];
