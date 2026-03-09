@@ -68,7 +68,7 @@ path_opt.curr_trial= 0;   % you could overwrite and start from trial N by typing
     
     %% Main while loop running controlling the experiment
     stage_idx = 0;
-    Beeper(1200, 3000, .15);
+    Beeper(1200, 3000, .30);
     times.exp_start_t = GetSecs();
     save_duration=0;
     while(session_onset)
